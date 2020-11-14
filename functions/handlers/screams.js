@@ -103,6 +103,11 @@ exports.commentOnScream = (req, res) => {
       return res.status(400).json("Scream Not Found");
     }
 
+    return doc.ref.update({
+      commentCount: doc.data().commentCount + 1
+    })
+  })
+  .then(() => {
     return db.collection('comments').add(newComment);
   })
   .then(() => {
@@ -142,7 +147,7 @@ exports.likeScream = (req, res) => {
           userHandle: req.user.handle
         })
         .then(() => {
-          screamData.likeCount++
+          screamData.likeCount++;
           return screamDocument.update({likeCount: screamData.likeCount});
         })
         .then(() => {
@@ -185,7 +190,8 @@ exports.unLikeScream = (req, res) => {
       return res.status(400).json({error: 'scream not liked'});
     }
     else{
-      return db.doc(`/likes/${data.doc[0].data().id}`).delete()
+      console.log(data.docs[0].id);
+      return db.doc(`/likes/${data.docs[0].id}`).delete()
         .then(()=> {
           screamData.likeCount--;
           return screamDocument.update({likeCount: screamData.likeCount});
@@ -199,4 +205,27 @@ exports.unLikeScream = (req, res) => {
     console.error(err);
     res.status(500).json({error: err.code})
   })
+}
+
+exports.deleteScream = (req, res) => {
+  const document = db.doc(`/screams/${req.params.screamId}`);
+  document.get()
+    .then((doc) => {
+      if (!doc.exists) {
+        return res.status(404).json({error: 'Scream Data Not Found'});
+      }
+      if (doc.data().userHandle !== req.user.handle) {
+        return res.status(403).json({error: 'Unauthorized Action'});
+      }
+      else{
+        return document.delete();
+      }
+    })
+    .then(() => {
+      res.json({message: 'Scream Deleted Successfully'})
+    })
+    .catch((err) => {
+      console.error(err);
+      return res.status(500).json({error: err.code});
+    });
 }
