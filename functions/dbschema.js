@@ -22,10 +22,11 @@ let db = {
     ],
     comments: [
       {
-        userHandle: 'user',
-        screamId: 'kdjsfgdksuufhgkdsufky',
-        body: 'nice one mate!',
-        createdAt: '2019-03-15T10:59:52.798Z'
+        userHandle: 'tiakh',
+        screamId: 'BzKrrFGXMK7RanpXaXbi',
+        body: 'third comments here !',
+        createdAt: "2020-11-13T01:50:00.223Z",
+        urlImage: 'https://firebasestorage.googleapis.com/v0/b/social-project-beddf.appspot.com/o/97911.png?alt=media'
       }
     ],
     notifications: [

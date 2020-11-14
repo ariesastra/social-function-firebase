@@ -9,6 +9,9 @@ const {
         getAllScreams, 
         postScreams,
         getScream,
+        commentOnScream,
+        likeScream,
+        unLikeScream
     } = require('./handlers/screams');
 const {
         logIn,
@@ -24,8 +27,9 @@ app.post('/scream', FirebaseAuth, postScreams);
 app.get('/scream/:screamId', getScream);
 // TODO: delete scream
 // TODO: like a scream
-// TODO: unlike a scream
-// TODO: comment on scream
+app.post('/scream/:screamId/like', FirebaseAuth, likeScream);
+app.post('/scream/:screamId/unlike', FirebaseAuth, unLikeScream);
+app.post('/scream/:screamId/comment', FirebaseAuth, commentOnScream);
 
 // USER ROUTES
 app.post('/user', FirebaseAuth, addUserDetails); 
@@ -39,4 +43,3 @@ app.post('/login', logIn);
 app.post('/user/upload-profile-image', FirebaseAuth, uploadImage);
 
 exports.api = functions.region('asia-southeast2').https.onRequest(app);
-
