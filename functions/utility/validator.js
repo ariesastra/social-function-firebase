@@ -1,17 +1,10 @@
 // HELPER FOR EMAIL
 // Helper for checking email
 const isEmail = (email) => {
-    // REGEX
     const regEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    if (email.match(regEx)) {
-        console.log('true');
-        return true;
-    } else {
-        console.log('false');
-        return false;
-    }
-}
+    if (email.match(regEx)) return true;
+    else return false;
+};
 // Helper for empty value
 const isEmpty = (string) => {
     if (string.trim() === '') {

@@ -45,11 +45,11 @@ exports.postScreams = (req, res) => {
           const resScream = newScream;
           resScream.screamId = doc.id;
 
-          res.json({resScream});
+          return res.json({resScream});
         })
         .catch(err => {
-            res.status(500).json({error: 'something went wrong !'});
-            console.log(err);
+          console.log(err);
+          return res.status(500).json({error: 'something went wrong !'});
         })
 };
 
@@ -79,13 +79,13 @@ exports.getScream = (req, res) => {
     })
     .catch(err => {
       console.error(err);
-      res.status(500).json({ error: err.message });
+      return res.status(500).json({ error: err.message });
     });
 };
 
 exports.commentOnScream = (req, res) => {
   if (req.body.body.trim() === '') {
-    return res.status(400).json({error: "Must not be Empty"});
+    return res.status(400).json({comment: "Must not be Empty"});
   }
 
   const newComment = {
@@ -111,7 +111,7 @@ exports.commentOnScream = (req, res) => {
     return db.collection('comments').add(newComment);
   })
   .then(() => {
-    res.json(newComment);
+    return res.json(newComment);
   })
   .catch(err => {
     console.error(err);
@@ -160,7 +160,7 @@ exports.likeScream = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).json({error: err.code})
+      return res.status(500).json({error: err.code})
     });
 }
 
@@ -197,13 +197,13 @@ exports.unLikeScream = (req, res) => {
           return screamDocument.update({likeCount: screamData.likeCount});
         })
         .then(()=>{
-          res.json(screamData);
+          return res.json(screamData);
         })
     }
   })
   .catch((err) => {
     console.error(err);
-    res.status(500).json({error: err.code})
+    return res.status(500).json({error: err.code})
   })
 }
 
@@ -222,7 +222,7 @@ exports.deleteScream = (req, res) => {
       }
     })
     .then(() => {
-      res.json({message: 'Scream Deleted Successfully'})
+      return res.json({message: 'Scream Deleted Successfully'})
     })
     .catch((err) => {
       console.error(err);
