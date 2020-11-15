@@ -100,9 +100,7 @@ exports.createNotificationOnComment = functions.region('asia-southeast2').firest
             .catch((err) => {console.error(err)})
 })
 
-exports.onUserImageChange = functions
-  .region('asia-southeast2')
-  .firestore.document('/users/{userId}')
+exports.onUserImageChange = functions.region('asia-southeast2').firestore.document('/users/{userId}')
   .onUpdate((change) => {
     console.log(change.before.data());
     console.log(change.after.data());
@@ -124,9 +122,7 @@ exports.onUserImageChange = functions
     } else return true;
   });
 
-exports.onScreamDeleted = functions
-    .region('asia-southeast2')
-    .firestore.document('/screams/{screamId}')
+exports.onScreamDeleted = functions.region('asia-southeast2').firestore.document('/screams/{screamId}')
     .onDelete((snapshot, context) => {
         const screamId = context.params.screamId;
         const batch = db.batch();
